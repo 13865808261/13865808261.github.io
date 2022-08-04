@@ -1,30 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<title>Lightning</title>
+    <meta charset="UTF-8">
+    <title>方式一</title>
+    <script type="text/javascript">
+        function show() {
+            alert("点击【确定】将自动关闭窗口");
+            window.opener=null;
+            window.open("","_self");
+            window.close();
+        }
+    </script>
+</head>
+<body onload="show()">
+<p>我爱学习</p>
+<p>学习爱我</p>
+<p>沉迷学习</p>
+<p>无法自拔</p>
+</body>
+</html>
+<----------------------------------------------------->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>方式二</title>
 </head>
 <body>
-
-swal({
-  title: "Are you sure?",
-  text: "You will not be able to recover this imaginary file!",
-  type: "warning",
-  showCancelButton: true,
-  confirmButtonColor: "#DD6B55",
-  confirmButtonText: "Yes, delete it!",
-  cancelButtonText: "No, cancel plx!",
-  closeOnConfirm: false,
-  closeOnCancel: false
-},
-function(isConfirm){
-  if (isConfirm) {
-    swal("Deleted!", "Your imaginary file has been deleted.", "success");
-  } else {
-    swal("Cancelled", "Your imaginary file is safe :)", "error");
-  }
-});
-
-
+<a href="javascript:self.close()">【关闭窗口】</a>
 </body>
 </html>
