@@ -1,51 +1,209 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <title>简单聊天室</title>
+    <title>Cool Chat</title>
+    <style>
+      /* Set background color and font styles for the page */
+      body {
+        background-color: #222;
+        color: white;
+        font-family: Arial, sans-serif;
+      }
+      
+      /* Style the chatbox area */
+      #chatbox {
+        height: 400px;
+        overflow-y: scroll;
+        padding: 10px;
+        background-color: #111;
+        border-radius: 10px;
+      }
+      
+      /* Style the chat messages */
+      .message {
+        margin-bottom: 10px;
+        padding: 10px;
+        max-width: 80%;
+        border-radius: 10px;
+      }
+      
+      /* Style the user's messages */
+      .user-message {
+        background-color: #4CAF50;
+      }
+      
+      /* Style the chatbot's messages */
+      .chatbot-message {
+        background-color: #2196F3;
+      }
+      
+      /* Style the input box and send button */
+      #inputbox {
+        width: 70%;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        margin-right: 10px;
+        font-size: 16px;
+      }
+      
+      #sendbutton {
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #555;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      
+      #sendbutton:hover {
+        background-color: #333;
+      }
+      
+      /* Style the login form */
+      #loginform {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+      }
+      
+      #usernameinput {
+        width: 50%;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
+      
+      #loginbutton {
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #555;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      
+      #loginbutton:hover {
+        background-color: #333;
+      }
+    </style>
   </head>
   <body>
-    <h1>简单聊天室</h1>
-    <div id="chatlog"></div>
-    <form onsubmit="sendMessage(); return false;">
-      <input type="text" id="username" placeholder="请输入用户名" required>
-      <input type="text" id="message" placeholder="请输入消息" required>
-      <button type="submit">发送</button>
-    </form>
-
+    <!-- Login form -->
+    <div id="loginform">
+      <h1>Cool Chat</h1>
+      <input type="text" id="usernameinput" placeholder="Username...">
+      <button id="loginbutton">Login</button>
+    </div>
+    
+    <!-- Chatbox area (hidden until user logs in) -->
+    <div id="chatboxarea" style="display: none;">
+      <h1>Cool Chat</h1>
+      <div id="chatbox"></div>
+      <div id="inputarea">
+        <input type="text" id="inputbox" placeholder="Type your message here...">
+        <button id="sendbutton">Send</button>
+      </div>
+    </div>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+    
     <script>
-      let history = [];
-
-      // 发送消息到服务器
-      function sendMessage() {
-        let username = document.getElementById("username").value;
-        let message = document.getElementById("message").value;
-
-        // 发送消息到服务器的代码
-
-        addMessage(username, message);
-        document.getElementById("message").value = "";
-      }
-
-      // 添加消息到聊天记录
-      function addMessage(username, message) {
-        history.push({username: username, message: message});
-        let chatlog = document.getElementById("chatlog");
-        let messageElement = document.createElement("div");
-        messageElement.innerText = `${username}: ${message}`;
-        chatlog.appendChild(messageElement);
-      }
-
-      // 初始化聊天记录
-      function initChatlog() {
-        for (let i = 0; i < history.length; i++) {
-          addMessage(history[i].username, history[i].message);
-        }
-      }
-
-      window.onload = function() {
-        initChatlog();
+      // Initialize Firebase
+      var firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_AUTH_DOMAIN",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_STORAGE_BUCKET",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
       };
+      firebase.initializeApp(firebaseConfig);
+      
+      // Get references to the login form and chatbox area elements
+      const loginform = document.getElementById("loginform");
+      const usernameinput = document.getElementById("usernameinput");
+      const loginbutton = document.getElementById("loginbutton");
+      const chatboxarea = document.getElementById("chatboxarea");
+      const chatbox = document.getElementById("chatbox");
+      const inputbox = document.getElementById("inputbox");
+      const sendbutton = document.getElementById("sendbutton");
+      
+      // Add event listener for the login button
+      loginbutton.addEventListener("click", login);
+      
+      // Function to log in the user
+      function login() {
+   // Get the user's username
+        const username = usernameinput.value;
+        
+        // Sign in or create a new user with Firebase Auth
+        firebase.auth().signInAnonymously()
+          .then(() => {
+            // Get a reference to the Firestore database
+            const db = firebase.firestore();
+            
+            // Add a listener for new messages
+            db.collection("messages")
+              .orderBy("timestamp")
+              .onSnapshot((querySnapshot) => {
+                querySnapshot.docChanges().forEach((change) => {
+                  if (change.type === "added") {
+                    const message = change.doc.data();
+                    appendMessage(message.text, message.sender);
+                  }
+                });
+              });
+            
+            // Hide the login form and show the chatbox area
+            loginform.style.display = "none";
+            chatboxarea.style.display = "block";
+          })
+          .catch((error) => {
+            console.error("Error signing in:", error);
+          });
+      }
+      
+      // Add event listener for the send button
+      sendbutton.addEventListener("click", sendMessage);
+      
+      // Function to send a message to the database
+      function sendMessage() {
+        // Get the user's input message
+        const userInput = inputbox.value;
+        
+        // Clear the input box
+        inputbox.value = "";
+        
+        // Add the message to the database
+        const db = firebase.firestore();
+        db.collection("messages").add({
+          sender: "user",
+          text: userInput,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      }
+      
+      // Function to append a message to the chatbox
+      function appendMessage(message, sender) {
+        const messageNode = document.createElement("div");
+        messageNode.textContent = message;
+        messageNode.classList.add("message");
+        messageNode.classList.add(sender + "-message");
+        chatbox.appendChild(messageNode);
+        
+        // Scroll to the bottom of the chatbox
+        chatbox.scrollTop = chatbox.scrollHeight;
+      }
     </script>
   </body>
 </html>
