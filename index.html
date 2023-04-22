@@ -1,44 +1,51 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8"/>
-<title>闪耀（Lightning）
-</title>
-<style type="text/css">
-*{margin:0;padding:0;}
-body{background:black;}
-canvas{display:block;}
-</style>
-</head>
-<body>
-<canvas id="c"></canvas>
-<script type="text/javascript">
-var c=document.getElementById("c");
-var ctx= c.getContext("2d");
-c.height=window.innerHeight;
-c.width=window.innerWidth;
-var chinese="010110";
-chinese=chinese.split("");
-var font_size=10;
-var columns=c.width/font_size;
-var drops=[];
-for(var i=0;i<columns;i++)
-	drops[i]=1;
-function draw(){
-	ctx.fillStyle="rgba(0,0,0,0.05)";
-	ctx.fillRect(0,0,c.width,c.height);
-	ctx.fillStyle="#0F0";
-	ctx.font=font_size+"px arial";
-	for(var i=0;i<drops.length;i++){
-	var text=chinese[Math.floor
-(Math.random()*chinese.length)];
-ctx.fillText(text,i*font_size,drops[i]*font_size);
-if(drops[i]*font_size>c.height&&Math.random()>0.975)
-	drops[i]=0;
-	drops[i]++;
-	}
-}
-setInterval(draw,50);
-</script>
-</body>
-</html> 
+  <head>
+    <meta charset="UTF-8">
+    <title>简单聊天室</title>
+  </head>
+  <body>
+    <h1>简单聊天室</h1>
+    <div id="chatlog"></div>
+    <form onsubmit="sendMessage(); return false;">
+      <input type="text" id="username" placeholder="请输入用户名" required>
+      <input type="text" id="message" placeholder="请输入消息" required>
+      <button type="submit">发送</button>
+    </form>
+
+    <script>
+      let history = [];
+
+      // 发送消息到服务器
+      function sendMessage() {
+        let username = document.getElementById("username").value;
+        let message = document.getElementById("message").value;
+
+        // 发送消息到服务器的代码
+
+        addMessage(username, message);
+        document.getElementById("message").value = "";
+      }
+
+      // 添加消息到聊天记录
+      function addMessage(username, message) {
+        history.push({username: username, message: message});
+        let chatlog = document.getElementById("chatlog");
+        let messageElement = document.createElement("div");
+        messageElement.innerText = `${username}: ${message}`;
+        chatlog.appendChild(messageElement);
+      }
+
+      // 初始化聊天记录
+      function initChatlog() {
+        for (let i = 0; i < history.length; i++) {
+          addMessage(history[i].username, history[i].message);
+        }
+      }
+
+      window.onload = function() {
+        initChatlog();
+      };
+    </script>
+  </body>
+</html>
