@@ -1,0 +1,318 @@
+@charset "utf-8";
+*{margin:0;padding:0;}
+body{margin:0 auto}
+.clear{ clear:both;}
+a{color:#333;text-decoration:none;}
+a:hover{text-decoration:underline;}
+li{list-style-type:none;}
+img{width:auto;max-width:100%;}
+.main{width:1200px;margin:0 auto;overflow:visible;}
+
+.content12{width:1200px;margin:0 auto;}
+
+
+.daohang {
+width:1200px;background:#FF6600;float:left;
+
+}
+.daohang .img{
+width:226px;
+float:left;
+
+}
+
+.daohang .img img{
+width:200px;height:90px;
+float:left;
+}
+
+
+
+.daohang ul{
+width:934px;
+background:#FF6600;float:left;
+}
+
+.daohang ul li{
+float:left;
+width:100px; 
+text-align:center;
+height:90px;line-height:90px;color:#fff;position: relative;
+}
+
+
+.daohang ul li a.active{
+color:#fff;}
+.daohang ul li a{
+color:#fff;}
+ 
+.daohang li:hover a{
+color:#fff;}
+
+
+
+
+
+
+
+
+
+.guanggaotupian
+{
+text-align:center;
+
+}
+.guanggaotupian img
+{
+width:1200px;
+
+}
+
+
+
+
+
+.content8{width:800px;float:left;}
+
+
+.taitou .title{
+
+
+
+border-bottom-color:#FF6600;border-bottom-style:solid;border-bottom-width:1px;
+
+
+
+overflow:hidden;
+margin-bottom:10px;
+margin-top:10px;
+margin-left:10px;
+margin-right:10px;
+}
+.taitou .stitle{text-align:center;padding:10px 20px;font-weight:bold;float:left;
+
+
+color:#000000;
+}
+.taitou .more{
+padding-top:10px;
+float:right;
+margin-right:10px;
+font-weight:bold;
+
+}
+
+
+
+.xysh ul
+{
+width:800px;
+}
+.xysh ul li
+{
+width:780px;padding:5px;
+float:left;
+
+
+border-top-color:#FF6600;border-top-style:dashed;border-top-width:2px;border-left-color:#FF6600;border-left-style:dashed;border-left-width:2px;border-bottom-color:#FF6600;border-bottom-style:dashed;border-bottom-width:2px;border-right-color:#FF6600;border-right-style:dashed;border-right-width:2px;
+margin-top:10px;
+
+
+}
+.xysh ul li:hover
+{
+
+}
+
+
+.xysh ul li img
+{
+width:302px;padding:5px;
+height:200px;float:left;
+
+
+
+
+
+
+}
+
+
+
+
+.xysh ul li .title{margin:10px 0px;
+font-weight:bold;
+font-size:16px;
+}
+.xysh ul li .desc
+{
+width:438px;text-align:left;float:left;
+padding:5px;
+margin-left:20px;
+}
+.xysh ul li button
+{
+display:block;
+text-align:left;
+padding:5px 10px;
+background:#FF6600;margin-top:20px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+.content4{width:400px;float:left;}
+
+
+.xyxw ul
+{
+width:400px;}
+.xyxw ul li{
+width:380px;float:left;
+padding:10px;
+text-align:center;
+}
+.xyxw ul li img
+{
+width:380px;height:300px;}
+.xyxw ul li .desc{
+padding:10px 0px;
+}
+
+
+
+
+
+
+
+
+.lybd 
+{
+width:1200px;text-align:left;
+margin:0 auto;
+
+}
+
+.lybd form
+{
+line-height:40px;border-bottom-color:#000000;border-bottom-style:solid;border-bottom-width:0px;border-top-color:#000000;border-top-style:solid;border-top-width:0px;border-left-color:#000000;border-left-style:solid;border-left-width:0px;border-right-color:#000000;border-right-style:solid;border-right-width:0px;
+}
+.lybd select{
+text-align:left;
+margin:0px 10px;
+overflow:hidden;
+vertical-align:middle;
+height:40px;height:40px;line-height:40px;border-bottom-color:#999999;border-bottom-style:solid;border-bottom-width:1px;border-top-color:#999999;border-top-style:solid;border-top-width:1px;border-left-color:#999999;border-left-style:solid;border-left-width:1px;border-right-color:#999999;border-right-style:solid;border-right-width:1px;
+}
+
+.lybd checkbox,radio{
+text-align:left;
+margin:0px 10px;
+
+overflow:hidden;
+vertical-align:middle;
+height:40px;height:40px;line-height:40px;border-bottom-color:#999999;border-bottom-style:solid;border-bottom-width:1px;border-top-color:#999999;border-top-style:solid;border-top-width:1px;border-left-color:#999999;border-left-style:solid;border-left-width:1px;border-right-color:#999999;border-right-style:solid;border-right-width:1px;
+}
+
+
+.lybd input{
+text-align:left;
+margin:0px 10px;
+overflow:hidden;
+vertical-align:middle;
+height:40px;line-height:40px;border-bottom-color:#999999;border-bottom-style:solid;border-bottom-width:1px;border-top-color:#999999;border-top-style:solid;border-top-width:1px;border-left-color:#999999;border-left-style:solid;border-left-width:1px;border-right-color:#999999;border-right-style:solid;border-right-width:1px;
+
+}
+
+
+.lybd textarea{
+text-align:left;
+margin:0px 10px;
+overflow:hidden;
+vertical-align:middle;
+height:40px;line-height:40px;border-bottom-color:#999999;border-bottom-style:solid;border-bottom-width:1px;border-top-color:#999999;border-top-style:solid;border-top-width:1px;border-left-color:#999999;border-left-style:solid;border-left-width:1px;border-right-color:#999999;border-right-style:solid;border-right-width:1px;
+
+}
+
+
+
+.yonghubiaodan ul li
+{
+padding-left:10px;
+margin-bottom:10px;
+width:370px;margin-right:10px;
+float:left;
+}
+
+.yonghubiaodan .list
+{
+border-bottom-color:#dddddd;border-bottom-style:solid;border-bottom-width:1px;border-top-color:#dddddd;border-top-style:solid;border-top-width:1px;border-left-color:#dddddd;border-left-style:solid;border-left-width:1px;border-right-color:#dddddd;border-right-style:solid;border-right-width:1px;
+}
+
+
+
+
+
+
+.yonghubiaodan  form
+{
+line-height:40px;
+}
+.yonghubiaodan select{
+width:380px;text-align:left;
+margin:0px 10px;
+overflow:hidden;
+vertical-align:middle;
+height:40px;height:40px;line-height:40px;
+}
+
+.yonghubiaodan checkbox,radio{
+text-align:left;
+margin:0px 10px;
+
+overflow:hidden;
+vertical-align:middle;
+height:40px;height:40px;line-height:40px;
+}
+
+
+.yonghubiaodan input{
+width:280px;text-align:left;
+margin:0px 10px;
+overflow:hidden;
+vertical-align:middle;
+height:40px;line-height:40px;}
+
+.yonghubiaodan textarea{
+width:250px;text-align:left;
+margin:0px 0px;
+overflow:hidden;
+vertical-align:middle;
+font-size: 16px;
+height:100px;
+
+}
+
+
+.yonghubiaodan .title
+{
+margin:0px 10px;
+}
+.yonghubiaodan button{
+width:100%;
+text-align:center;
+margin:0px 5px;
+line-height:42px;height:42px;line-height:42px;background:#000000;color:#ffffff;
+}
+-----------------------------------
+©著作权归作者所有：来自51CTO博客作者html网页设计的原创作品，请联系作者获取转载授权，否则将追究法律责任
+HTML期末学生大作业-班级校园我的校园网页设计与实现html+css+javascript
+https://blog.51cto.com/ruan365392777/5826810
