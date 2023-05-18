@@ -1,209 +1,236 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Cool Chat</title>
-    <style>
-      /* Set background color and font styles for the page */
-      body {
-        background-color: #222;
-        color: white;
-        font-family: Arial, sans-serif;
-      }
-      
-      /* Style the chatbox area */
-      #chatbox {
-        height: 400px;
-        overflow-y: scroll;
-        padding: 10px;
-        background-color: #111;
-        border-radius: 10px;
-      }
-      
-      /* Style the chat messages */
-      .message {
-        margin-bottom: 10px;
-        padding: 10px;
-        max-width: 80%;
-        border-radius: 10px;
-      }
-      
-      /* Style the user's messages */
-      .user-message {
-        background-color: #4CAF50;
-      }
-      
-      /* Style the chatbot's messages */
-      .chatbot-message {
-        background-color: #2196F3;
-      }
-      
-      /* Style the input box and send button */
-      #inputbox {
-        width: 70%;
-        padding: 10px;
-        border-radius: 5px;
-        border: none;
-        margin-right: 10px;
-        font-size: 16px;
-      }
-      
-      #sendbutton {
-        border: none;
-        padding: 10px;
-        border-radius: 5px;
-        background-color: #555;
-        color: white;
-        font-size: 16px;
-        cursor: pointer;
-      }
-      
-      #sendbutton:hover {
-        background-color: #333;
-      }
-      
-      /* Style the login form */
-      #loginform {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-      }
-      
-      #usernameinput {
-        width: 50%;
-        padding: 10px;
-        border-radius: 5px;
-        border: none;
-        margin-bottom: 10px;
-        font-size: 16px;
-      }
-      
-      #loginbutton {
-        border: none;
-        padding: 10px;
-        border-radius: 5px;
-        background-color: #555;
-        color: white;
-        font-size: 16px;
-        cursor: pointer;
-      }
-      
-      #loginbutton:hover {
-        background-color: #333;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Login form -->
-    <div id="loginform">
-      <h1>Cool Chat</h1>
-      <input type="text" id="usernameinput" placeholder="Username...">
-      <button id="loginbutton">Login</button>
-    </div>
-    
-    <!-- Chatbox area (hidden until user logs in) -->
-    <div id="chatboxarea" style="display: none;">
-      <h1>Cool Chat</h1>
-      <div id="chatbox"></div>
-      <div id="inputarea">
-        <input type="text" id="inputbox" placeholder="Type your message here...">
-        <button id="sendbutton">Send</button>
-      </div>
-    </div>
-    
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
-    
-    <script>
-      // Initialize Firebase
-      var firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_AUTH_DOMAIN",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_STORAGE_BUCKET",
-        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-        appId: "YOUR_APP_ID"
-      };
-      firebase.initializeApp(firebaseConfig);
-      
-      // Get references to the login form and chatbox area elements
-      const loginform = document.getElementById("loginform");
-      const usernameinput = document.getElementById("usernameinput");
-      const loginbutton = document.getElementById("loginbutton");
-      const chatboxarea = document.getElementById("chatboxarea");
-      const chatbox = document.getElementById("chatbox");
-      const inputbox = document.getElementById("inputbox");
-      const sendbutton = document.getElementById("sendbutton");
-      
-      // Add event listener for the login button
-      loginbutton.addEventListener("click", login);
-      
-      // Function to log in the user
-      function login() {
-   // Get the user's username
-        const username = usernameinput.value;
-        
-        // Sign in or create a new user with Firebase Auth
-        firebase.auth().signInAnonymously()
-          .then(() => {
-            // Get a reference to the Firestore database
-            const db = firebase.firestore();
-            
-            // Add a listener for new messages
-            db.collection("messages")
-              .orderBy("timestamp")
-              .onSnapshot((querySnapshot) => {
-                querySnapshot.docChanges().forEach((change) => {
-                  if (change.type === "added") {
-                    const message = change.doc.data();
-                    appendMessage(message.text, message.sender);
-                  }
-                });
-              });
-            
-            // Hide the login form and show the chatbox area
-            loginform.style.display = "none";
-            chatboxarea.style.display = "block";
-          })
-          .catch((error) => {
-            console.error("Error signing in:", error);
-          });
-      }
-      
-      // Add event listener for the send button
-      sendbutton.addEventListener("click", sendMessage);
-      
-      // Function to send a message to the database
-      function sendMessage() {
-        // Get the user's input message
-        const userInput = inputbox.value;
-        
-        // Clear the input box
-        inputbox.value = "";
-        
-        // Add the message to the database
-        const db = firebase.firestore();
-        db.collection("messages").add({
-          sender: "user",
-          text: userInput,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        });
-      }
-      
-      // Function to append a message to the chatbox
-      function appendMessage(message, sender) {
-        const messageNode = document.createElement("div");
-        messageNode.textContent = message;
-        messageNode.classList.add("message");
-        messageNode.classList.add(sender + "-message");
-        chatbox.appendChild(messageNode);
-        
-        // Scroll to the bottom of the chatbox
-        chatbox.scrollTop = chatbox.scrollHeight;
-      }
-    </script>
-  </body>
-</html>
+<head>
+<meta charset="utf-8" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+
+</head>
+<body>
+<div class="main" >
+
+<div  class="content12">
+<div class="daohang">
+
+
+
+
+
+<div class="img"><img src="images/1.jpg"></div>
+ 
+
+
+<ul>
+<li class="active"><a href="index.html">首页</a>
+</li>
+<li ><a href="xiaoyuanshenghuo.html">校园生活</a></li>
+<li ><a href="xiaoyuanhuodong.html">校园活动</a></li>
+<li ><a href="xiaoyuanxinwen.html">校园新闻</a></li>
+<li ><a href="wodexiaoyuan.html">我的校园</a></li>
+<li ><a href="yonghuliuyan.html">用户留言</a></li>
+<li ><a href="zhucedenglu.html">注册登录</a></li>
+ 
+</ul>
+
+
+
+
+
+</div>
+</div>
+<div class="clear"></div>
+
+<div  class="content12">
+<div class="guanggaotupian">
+
+
+<div class="img">
+<img src="images/2.jpg"></div>
+ 
+
+</div>
+</div>
+<div class="clear"></div>
+
+<div  class="content8">
+<div class="taitou">
+
+<div class="title">
+<div class="stitle">校园生活</div>  <a href="#" class="more"></a>
+</div>
+ 
+</div>
+<div class="xysh">
+
+
+
+
+
+
+<ul>
+<li>
+<div class="img"><img src="images/3.jpg"></div>
+<div class="desc">
+<div class="title">一座城池</div>
+<div class="clear"></div>
+<br>学院网 讯一座城池 到达上海的时候不是凌晨，是一个清晨。 由于卧铺车非常的热，大家都没有睡好，走出地铁站，清冽的空气涌来，顿时清醒了一半。<button>查看详情</button>
+</div>
+</li>
+<li>
+<div class="img"><img src="images/4.jpg"></div>
+<div class="desc">
+<div class="title">中矿大智慧对决，辩场争锋――信控学院举办2017级新生辩论赛半决赛</div>
+<div class="clear"></div>
+<br>学院网 讯经过一个多月的激烈比拼，信控学院2017级4个班级在新生辩论赛小组赛中脱颖而出，12月4日，信控学院2017级新生辩论赛半决赛在博学楼五号楼举行。<button>查看详情</button>
+</div>
+</li>
+ 
+</ul>
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+
+<div  class="content4">
+<div class="taitou">
+
+<div class="title">
+<div class="stitle">校园新闻</div>  <a href="#" class="more"></a>
+</div>
+ 
+</div>
+<div class="xyxw">
+
+
+
+
+
+
+
+<ul>
+<li>
+
+<div class="img"><img src="images/5.jpg"></div>
+<div class="desc">                 3月22日下午，我校与德国F+U萨克森非盈利性教育培训中心合作成立德国大学预科培训中心签字仪式在实训中心举行。叶小明院长与F+U总裁Meinhold博士代表合作双方签约。吴茂昶副院长及应用外语系、外事办负责人等出席了签字仪式。<br /> 该中心的成立，为志在留学德国的广大学生提供优质的德语预科课程培训，为加强我校与德国职业教育机构及德国高校的合作提供平台。</div>
+
+</li>
+ 
+</ul>
+
+</div>
+</div>
+<div class="clear"></div>
+
+<div  class="content12">
+<div class="taitou">
+
+<div class="title">
+<div class="stitle">用户留言</div>  <a href="#" class="more"></a>
+</div>
+ 
+</div>
+<div class="lybd">
+
+
+
+
+
+<form id="form" class="form">
+
+
+
+
+<div>
+
+<input  type="input" name="input"  class="input"  id="ziduan1" value="呢称" />
+</div>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div>
+
+<input  type="input" name="input"  class="input"  id="ziduan2" value="电话" />
+</div>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div>
+<input class="radio" type="radio" name="radio3" value="男"  checked />男<input class="radio" type="radio" name="radio3" value="女"   />女</div>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+
+
+<div>
+<div class="title"></div>
+<textarea    class="textarea" name="textarea" > 介绍</textarea>
+</div>
+<div class="clear"></div>
+
+
+
+
+
+
+
+<button type="button"  class="submit" id="sub"   >提交</button>
+
+ 
+</form>
+</div>
+</div>
+<div class="clear"></div>
+
+<div  class="content12">
+<div class="dibu">
+
+<div class="desc">
+我的校园 
+</div>
+
+
+</div>
+</div>
+<div class="clear"></div></div></body></html>
